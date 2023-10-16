@@ -1,0 +1,15 @@
+{
+  "TTY1818-2022" : {
+    "monitor_folder":"\\\\10.196.98.73\\test\\Quality\\CX_projects\\YYT1818\\result\\2023062902",
+    "cx_project":"D:\\Kun\\git_projects\\CX_GenerateReport\\templates\\111_0626.CXProj",
+    "cx_preplan": "D:\\Kun\\git_projects\\CX_GenerateReport\\templates\\TTY1818-2022_preplan_sample.ini",
+    "reporter": "D:\\Kun\\git_projects\\CX_GenerateReport\\templates\\TTY1818-2022_report_yyyymmdd.xlsx"
+  },
+  "3MFullArch" : {
+    "monitor_folder":"aaa",
+    "cx_project":"aaa",
+    "cx_preplan": "aaa",
+    "reporter": ""
+  }
+
+}

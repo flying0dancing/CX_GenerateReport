@@ -1,0 +1,23 @@
+{
+    "YYT1818_SingleRun": {
+        "export_excel_template" : "D:\\Kun\\git_projects\\CX_GenerateReport\\templates\\YYT1818-2022_report_yyyymmdd.xlsx",
+        "monitor_folder" : "\\\\10.196.98.73\\test\\Quality\\CX_projects\\YYT1818\\result\\800",
+        "pre_plan_ini_template" : "D:\\Kun\\git_projects\\CX_GenerateReport\\templates\\YYT1818-2022_preplan_sample.ini",
+        "cx_project" : "D:\\Kun\\git_projects\\CX_GenerateReport\\templates\\111_0703.CXProj",
+        "within1DayFlag" : false,
+        "overWriteCSVFlag" : false,
+        "id" : 1,
+        "cx_exe" : "D:\\Program Files\\Oqton\\Geomagic Control X 2023.1\\GeomagicControlX.exe",
+        "notes" : ""
+    },
+    "3M_FullArch": {
+        "export_excel_template":"",
+        "monitor_folder": "",
+        "pre_plan_ini_template": "",
+        "cx_project": "",
+        "within1DayFlag": false,
+        "overWriteCSVFlag": false,
+        "id": 1,
+        "notes": ""
+    }
+}
