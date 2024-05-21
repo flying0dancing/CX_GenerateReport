@@ -5,25 +5,29 @@ import psutil
 import time
 
 def execAndWaitFinish(cmdline_str):
-    process=subprocess.Popen(cmdline_str)
-    while process.poll() is None:
-        pass
-    #time.sleep(10)
-    print('=' * 15)
-    while True:
-        #if psutil.pid_exists(process.pid) and psutil.pid_exists(process.pid) in psutil.pids():
-            #print('running')
-            #time.sleep(5)
+    exit_code=-1
+    try:
+        process = subprocess.Popen(cmdline_str)
+        while process.poll() is None:
+            pass
+        # time.sleep(10)
+        print('=' * 15)
+        while True:
+            # if psutil.pid_exists(process.pid) and psutil.pid_exists(process.pid) in psutil.pids():
+            # print('running')
+            # time.sleep(5)
 
-        if isRunning('RFXOVMain.exe'):
-            print('invoke process is still running')
-            time.sleep(5)
-        else:
-            break
+            if isRunning('RFXOVMain.exe'):
+                print('invoke process is still running')
+                time.sleep(5)
+            else:
+                break
 
-    #output=process.stdout.read()
-    exit_code=process.returncode
-    #print(output)
+        # output=process.stdout.read()
+        exit_code = process.returncode
+        # print(output)
+    except Exception as e:
+        print(str(e))
     return exit_code
 
 def isRunning(process_name):

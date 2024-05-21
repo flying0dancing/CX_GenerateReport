@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import os.path
-from utils import DateTimeUtil
+from utils import DateTimeUtil, ChardetUtil
 import re
 import shutil, sys
 import logging
@@ -77,8 +77,6 @@ find some string in file content
 @param lineCount: the line count means last lines of the file content
 @return: return True or False, True means find the string, False means not find it
 '''
-
-
 def existInFileContentByStr(filepath, findstr, lineCount=10):
     flag = False
     strlist = getFileContentByStrList(filepath, [findstr], lineCount)
@@ -271,7 +269,17 @@ def updateFileSeperator(filePath):
     return filePath
 
 
-
+def getFileContent(filepath):
+    cached = []
+    encodingStr = ChardetUtil.getEncodingStr(filepath)
+    with open(filepath, 'r', encoding=encodingStr, errors='ignore') as fileHd:  # for reading chinese charactors
+        for line in fileHd.readlines():
+            line = line.strip()
+            if line == '':
+                continue
+            else:
+                cached.append(line)
+    return cached
 
 if __name__=='__main__':
     archiveFiles = []

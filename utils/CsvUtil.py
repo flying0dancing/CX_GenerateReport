@@ -80,7 +80,7 @@ class PrecisionData:
     def get_filename(self):
         return self.__file_name
     def toString(self):
-        logger.info("%s,%s,%s [%s, %s, %s, %s, %s] %s"%(self.__groupID, self.__orderID,self.__countID, self.__name, self.__notional_value, self.__measured_value, self.__offset, self.__tolerance, self.__file_name))
+        logger.info("%s,%s,(%s) [%s, %s, %s, %s, ±%s] %s"%(self.__groupID, self.__orderID,self.__countID, self.__name, self.__notional_value, self.__measured_value, self.__offset, self.__tolerance, self.__file_name))
         #print("%s"%(self.__countID))
 
 '''

@@ -53,7 +53,7 @@ def main_inner(monitorFolder,cxprojectname, preplanFile, reporterTemplate,within
             fileOrder = fileOrder + 1
 
     logger.info("====================================================")
-    logger.info("group, order [notional, measured, offset, tolerance]")
+    logger.info("name/group, order,(measured count) [name/group, notional, measured, offset, tolerance] filename")
     for precisionData in precisionData_List:
         precisionData.toString()
     logger.info("====================================================")

@@ -1,0 +1,1 @@
+pyinstaller --version-file "reporter_template_version_info.txt" --icon "SQE.ico" -F reporter_template.py --clean
