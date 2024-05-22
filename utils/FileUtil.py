@@ -217,7 +217,7 @@ def revFolders(path,within1DayFlag, overWriteCSVFlag, fileTypes=['.stl','.ply'],
             if len(fnameSplits) > 1 and fnameSplits[1] in fileTypes:
                 if overWriteCSVFlag == True:
                     archiveFiles.append(os.path.join(folderName, filename))
-                elif fileMatches(r'^' + fnameSplits[0] + '.*\.csv', filenames) == False:
+                elif fileMatches(r'^' + fnameSplits[0] + '.*\.csv$', filenames) == False:
                     archiveFiles.append(os.path.join(folderName, filename))
 
 def revFiles(path, keywordsList, fileTypes=['.stl', '.ply'], archiveFiles=[]):
