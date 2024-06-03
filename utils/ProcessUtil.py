@@ -28,7 +28,7 @@ def execAndWaitFinish(cmdline_str):
                 time.sleep(5)
             else:
                 break
-
+        print()
         # output=process.stdout.read()
         exit_code = process.returncode
         # print(output)
