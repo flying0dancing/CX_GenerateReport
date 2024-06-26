@@ -9,22 +9,16 @@ def main(inputFolder,outputFolder,fileTypes=['.stl','.ply']):
     input_base_name_prefix, input_base_name_suffix = getname_prefix_suffix(os.path.basename(os.path.abspath(inputFolder)))
     print(input_base_name_prefix)
     print(input_base_name_suffix)
-    csd_mesh_log = path_parent + "result_combineFileToOneFolder[" + input_base_name_prefix + "].log"
+    csd_mesh_log = path_parent + "result_combineFileTo1Folder[" + input_base_name_prefix + "].log"
     while os.path.exists(csd_mesh_log):
         os.remove(csd_mesh_log)
 
     logger(csd_mesh_log, "export files to output folder")
-    logger(csd_mesh_log, "inputFolder: "+path_parent)
-    keywordsList = inputFolder.replace(path_parent, '').split(' - ')
-    if len(keywordsList)>1:
-        keywordsList.pop(1)
-    else:
-        keywordsList.pop(0)
-    logger(csd_mesh_log, "subFolders' keywords: "+str(keywordsList))
+    logger(csd_mesh_log, "inputFolder: "+inputFolder)
     logger(csd_mesh_log,"outputFolder: "+outputFolder)
-    #print(keywordsList)
+
     files=[]
-    revFiles(path_parent,keywordsList,fileTypes,files) #get export files by keywords(date, first and last name)
+    revFiles(inputFolder,fileTypes,files) #get export files by keywords(date, first and last name)
     #print(files)
     makedirs(outputFolder) # create export folder
     if os.path.isdir(outputFolder) and files:
@@ -35,7 +29,7 @@ def copy2OutputFolder(files,outputFolder,loggerFile):
     index=len(os.listdir(outputFolder))+1
     for srcfile in files:
         splitNames=getFileName(srcfile)
-        outputName=splitNames[0]+str(index)+splitNames[1]
+        outputName=str(index)+'_'+splitNames[0]+splitNames[1]#renamed file, like 1_original name
         outputName=os.path.join(outputFolder,outputName)
         logger(loggerFile, "copy file %s to %s" % (srcfile,outputName))
         shutil.copy(srcfile,outputName)
@@ -94,26 +88,16 @@ def getname_prefix_suffix(fileName):
 
 
 
-def revFiles(path,keywordsList,fileTypes=['.stl','.ply'],archiveFiles=[]):
+def revFiles(path,fileTypes=['.stl','.ply'],archiveFiles=[]):
     for folderName, subfolders, filenames in os.walk(path):
-        #print("folderName")
-        #print(folderName)
-        #print("subfolders")
-        #print(subfolders)
-        for subfolder in subfolders:
-            flag=True
-            for keyword in keywordsList:
-                #print("keyword: "+keyword)
-                if keyword not in subfolder:
-                    #print("keyword  %s not in subfolder %s" % (keyword, subfolder))
-                    flag = False
-                    break
-            if flag==True:
-                filenames=os.listdir(os.path.join(folderName, subfolder))
-                for filename in filenames:
-                    suffix=os.path.splitext(filename)[1]
-                    if suffix in fileTypes:
-                        archiveFiles.append(os.path.join(folderName, subfolder,filename))
+        print("folderName: "+folderName)
+
+        for filename in filenames:
+            fnameSplits=os.path.splitext(filename)
+            if len(fnameSplits)>1 and fnameSplits[1] in fileTypes:
+                archiveFiles.append(os.path.join(folderName, filename))
+
+
 def logger(logfullname,msg):
     with open(logfullname,'a+', encoding='utf-8', errors='ignore') as fileHd: #for reading chinese charactors
         fileHd.write(msg+"\n")
@@ -121,6 +105,6 @@ def logger(logfullname,msg):
 
 if __name__=='__main__':
     print(str(sys.argv))
-    inputFolder=r'C:\D\0605\ScanFlow\20230731 - 154841 - Jean Dupont'
-    outputFolder=r'C:\D\0605\2023060502'
+    inputFolder=r'C:\D\0605\ScanFlow'
+    outputFolder=r'C:\D\0605\2023060505'
     main(inputFolder,outputFolder)

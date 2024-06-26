@@ -41,4 +41,6 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    version='reporter_template_version_info.txt',
+    icon=['SQE.ico'],
 )
