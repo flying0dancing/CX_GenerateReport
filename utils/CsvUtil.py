@@ -12,6 +12,7 @@ class PrecisionData:
         self.__groupID = groupID
         self.__orderID = orderID
         self.__countID=groupID[0]+orderID+','+groupID[1:]
+        self.__countID_reverse=groupID+','+orderID
         try:
             if fileType=='1Group':
                 self.__name = row[0]
@@ -47,6 +48,11 @@ class PrecisionData:
 
     def set_countID(self, str):
         self.__countID=str
+
+    def get_countID_reverse(self):
+        return self.__countID_reverse
+    def set_countID_reverse(self, str):
+        self.__countID_reverse=str
 
     def get_countID(self):
         return self.__countID
