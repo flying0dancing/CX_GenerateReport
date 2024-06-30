@@ -5,7 +5,7 @@ from docs.Conf import BASE_DIR
 from utils import ChardetUtil
 import logging
 from utils import Logger
-logger = logging.getLogger('generator.IniUtil')
+logger = logging.getLogger('IniUtil')
 
 def getConfig():
     # defined config file full path

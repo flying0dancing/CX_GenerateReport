@@ -4,13 +4,16 @@ import os,sys
 BASE_DIR=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
-from generator import Main
+from generator import Main,Main_6Sigma
 #if len(sys.argv)>=3:
 config_json = sys.argv[1]
 selected_template = sys.argv[2]
 if os.path.isfile(config_json):
     if 'YYT1818_SingleRun' in selected_template:
         Main.main(config_json, selected_template)
+    elif 'YYT1818_6Sigma' in selected_template:
+        if __name__ == '__main__':
+            Main_6Sigma.main(config_json, selected_template)
     '''
         jsonDict = JsonUtil.getJson(config_json)
         if selected_template in jsonDict.keys():

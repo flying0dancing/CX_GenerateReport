@@ -2,7 +2,7 @@ import time,datetime
 import os.path
 from time import strftime
 import logging
-logger = logging.getLogger('generator.DateTimeUtil')
+logger = logging.getLogger('DateTimeUtil')
 
 def get_time():
     now = time.localtime()

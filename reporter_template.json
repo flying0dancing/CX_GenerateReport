@@ -19,5 +19,16 @@
         "overWriteCSVFlag": false,
         "id": 1,
         "notes": ""
+    },
+    "YYT1818_6Sigma": {
+        "export_excel_template" : "YYT1818-2022_report(6Sigma)_yyyymmdd.xlsx",
+        "monitor_folder" : "C:\\D\\0629\\802",
+        "pre_plan_ini_template" : "D:\\Kun\\git_projects\\CX_GenerateReport\\templates\\YYT1818-2022_preplan_sample.ini",
+        "cx_project" : "D:\\Kun\\git_projects\\CX_GenerateReport\\templates\\111_0703.CXProj",
+        "within1DayFlag" : false,
+        "overWriteCSVFlag" : false,
+        "id" : 1,
+        "cx_exe" : "D:\\Program Files\\Oqton\\Geomagic Control X 2023.1\\GeomagicControlX.exe",
+        "notes" : ".*[\\\\/]?tip\\[((\\w+\\-)(\\d+))\\]_time\\[(.*)\\]"
     }
 }

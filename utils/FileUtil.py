@@ -5,7 +5,7 @@ from utils import DateTimeUtil, ChardetUtil
 import re
 import shutil, sys
 import logging
-logger = logging.getLogger('generator.FileUtil')
+logger = logging.getLogger('FileUtil')
 
 """
 :return true or false
@@ -50,11 +50,12 @@ def deldirs(fpath):
 
 
 def getFileName(fname):
-    basename = ''
     if fileExist(fname):
         basename = os.path.basename(fname)
-        os.path.splitext(basename)
-    return os.path.splitext(basename)
+        splits=os.path.splitext(basename)
+    else:
+        splits = os.path.splitext(fname)
+    return splits
 
 
 def getFileContentByStr(input, findstr):
@@ -259,7 +260,32 @@ def copyAndRenameFile(src,dst):
             logger.error("Unable to copy file. %s" % e )
         except:
             logger.error("Unexpected error", sys.exc_info())
+def copyAndRenameFile_AddSuffix(src,dst):
+    if fileExist(src):
+        split_names=os.path.splitext(dst)
+        count=0
+        while fileExist(dst):
+            count = count + 1
+            dst=split_names[0]+'_'+str(count)+split_names[1]
 
+        logger.info("copy file %s to %s" % (src,dst))
+        try:
+            shutil.copyfile(src, dst)
+            return dst
+        except IOError as e:
+            logger.error("Unable to copy file. %s" % e )
+        except:
+            logger.error("Unexpected error", sys.exc_info())
+    return None
+def renameFile_AddSuffix(dst):
+    split_names = os.path.splitext(dst)
+    count = 0
+    while fileExist(dst):
+        count = count + 1
+        dst = split_names[0] + '_' + str(count) + split_names[1]
+    logger.info("new file's name is: %s" % (dst))
+
+    return dst
 def updateFileSeperator(filePath):
     if not isEmptyStr(filePath):
         if filePath.find("\\")!=-1:
@@ -283,8 +309,45 @@ def getFileContent(filepath):
                 cached.append(line)
     return cached
 
+def get_threshold(regStr, searchedStr):
+    str='-1'
+    patternX = re.compile(regStr,re.IGNORECASE|re.UNICODE)
+    matchX = patternX.match(searchedStr)
+    if matchX:
+        str=matchX.group(1)
+        #print(matchX.group(1))
+    return str
+
+def appendValueToDict(dict, key,value):
+    v=dict.get(key)
+    if v is None:
+        dict[key] = value
+    else:
+        if (int(value) < int(v)):  # 取最小值
+            dict[key] = value
+
+def appendDictToDict(dict, key,values):
+    sub_exist_dict=dict.get(key)
+    if sub_exist_dict is None:
+        dict[key] = values
+    else:
+        for k,v in values.items():
+            if k not in sub_exist_dict.keys():
+                sub_exist_dict[k]=v
+                #dict[key] = sub_exist_dict
+            else:
+                if(int(v)<int(sub_exist_dict[k])):#取最小值
+                    sub_exist_dict[k] = v
+
+
+
 if __name__=='__main__':
     archiveFiles = []
     revFolders(r'D:\Kun\CX_projects\YYT1818-2022\autoTest', False,True, ['.stl', '.ply'], archiveFiles)
     for i in archiveFiles:
         print(i)
+    #filenames=[r'D:\Kun\CX_projects\YYT1818-2022\autoTest\tip[tip1-2]_time[4].stl',r'D:\Kun\CX_projects\YYT1818-2022\autoTest\tip[tip1-2]_time[3](报告 1).csv',r'D:\Kun\CX_projects\YYT1818-2022\autoTest\tip[tip1-3]_time[2].stl',r'D:\Kun\CX_projects\YYT1818-2022\autoTest\tip[tip1-3]_time[10].stl',r'D:\Kun\CX_projects\YYT1818-2022\autoTest\tip[tip2-1]_time[7].stl',r'D:\Kun\CX_projects\YYT1818-2022\autoTest\tip[tip2-10]_time[6].stl']
+
+
+
+

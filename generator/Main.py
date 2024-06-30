@@ -25,6 +25,7 @@ def main_inner(monitorFolder,cxprojectname, preplanFile, reporterTemplate,within
     software_geomagicControlX="GeomagicControlX.exe" #D:\\Program Files\\Oqton\\Geomagic Control X 2023.1\\GeomagicControlX.exe
     flag=0
     precisionData_List = []
+    precisionErrData_list=[]
     archiveFiles = []
     exportedReports=[]
     dateStr=DateTimeUtil.get_dateYYYYMMDD()
@@ -45,11 +46,11 @@ def main_inner(monitorFolder,cxprojectname, preplanFile, reporterTemplate,within
             FileUtil.revFiles(exportFolder,[keyword],['.csv'],exportedReports)
         fileOrder = fileOrder + 1
     fileOrder = 1
-    exportedReports=[]
-    FileUtil.revFiles(monitorFolder, None, ['.csv'], exportedReports)
+    if exportedReports==[]:
+        FileUtil.revFiles(monitorFolder, None, ['.csv'], exportedReports)
     for csvname in exportedReports:
         if csvname.lower().endswith('.csv'):
-            CsvUtil.readCSV4OneGroup(csvname, fileOrder, precisionData_List)
+            CsvUtil.readCSV4OneGroup(csvname, fileOrder, precisionData_List, precisionErrData_list)
             fileOrder = fileOrder + 1
 
     logger.info("====================================================")
@@ -59,8 +60,8 @@ def main_inner(monitorFolder,cxprojectname, preplanFile, reporterTemplate,within
     logger.info("====================================================")
     reporterNameSet=FileUtil.getFileName(reporterTemplate)
     reporter_full_name=monitorFolder+"\\"+reporterNameSet[0].replace('yyyymmdd', dateStr)+reporterNameSet[1]
-    FileUtil.copyAndRenameFile(reporterTemplate,reporter_full_name)
-    ExcelUtil.writeAndSaveAsExcel_YYT1818(reporter_full_name, reporter_full_name, 0, 4, precisionData_List)
+    reporter_new=FileUtil.copyAndRenameFile_AddSuffix(reporterTemplate,reporter_full_name)
+    ExcelUtil.writeAndSaveAsExcel_YYT1818(reporter_new, 0, 4, precisionData_List,precisionErrData_list)
 
     return flag
 
@@ -68,7 +69,7 @@ def main_inner(monitorFolder,cxprojectname, preplanFile, reporterTemplate,within
 
 if __name__=='__main__':
     print(Conf.BASE_DIR + r'\templates\YYT1818-2022_report_yyyymmdd.xlsx')
-    monitorFolder=r'V:\Quality\CX_projects\YYT1818\result\800'
+    monitorFolder=r'C:\D\0629\802'
     #r'\\10.196.98.73\test\Quality\CX_projects\YYT1818\result\800'
     #r'\\10.196.98.73\test\Quality\CX_projects\YYT1818\result\226'  bad data:\\10.196.98.73\test\Quality\CX_projects\YYT1818\result\226\20230711 - 150312 - 1 卧 龙\MandibularAnatomy(报告 1).csv
     cxprojectname=Conf.BASE_DIR+r'\templates\111_0707.CXProj'

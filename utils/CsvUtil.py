@@ -4,90 +4,9 @@ import csv
 import logging
 import traceback
 from utils import ChardetUtil
+from utils import DataSet
 from utils import Logger
-logger = logging.getLogger('generator.CsvUtil')
-
-class PrecisionData:
-    def __init__(self, groupID, orderID, row, fileType, filename):
-        self.__groupID = groupID
-        self.__orderID = orderID
-        self.__countID=groupID[0]+orderID+','+groupID[1:]
-        self.__countID_reverse=groupID+','+orderID
-        try:
-            if fileType=='1Group':
-                self.__name = row[0]
-                self.__notional_value = float(row[4])
-                self.__measured_value = float(row[5])
-                self.__offset = float(row[3])
-                self.__tolerance = float(row[2].replace('±', ''))
-                self.__file_name=filename
-            else: #full (10Groups)
-                self.__name = row[0]
-                self.__notional_value = float(row[1])
-                self.__measured_value = float(row[2])
-                self.__offset = float(row[3])
-                self.__tolerance = float(row[4].replace('±',''))
-                self.__file_name = filename
-        except ValueError as e:
-            logger.error(traceback.format_exc())
-    def set_name(self,str):
-        self.__name=str
-    def get_name(self):
-        return self.__name
-    def set_groupID(self, str):
-        self.__groupID = str
-
-    def get_groupID(self):
-        return self.__groupID
-
-    def set_orderID(self, str):
-        self.__orderID = str
-
-    def get_orderID(self):
-        return self.__orderID
-
-    def set_countID(self, str):
-        self.__countID=str
-
-    def get_countID_reverse(self):
-        return self.__countID_reverse
-    def set_countID_reverse(self, str):
-        self.__countID_reverse=str
-
-    def get_countID(self):
-        return self.__countID
-
-    def set_notional_value(self, val):
-        self.__notional_value = val
-
-    def get_notional_value(self):
-        return self.__notional_value
-
-    def set_measured_value(self, val):
-        self.__measured_value = val
-
-    def get_measured_value(self):
-        return self.__measured_value
-
-    def set_offset(self, val):
-        self.__offset = val
-
-    def get_offset(self):
-        return self.__offset
-
-    def set_tolerance(self, val):
-        self.__tolerance = val
-
-    def get_tolerance(self):
-        return self.__tolerance
-
-    def set_filename(self,str):
-        self.__file_name=str
-    def get_filename(self):
-        return self.__file_name
-    def toString(self):
-        logger.info("%s,%s,(%s) [%s, %s, %s, %s, ±%s] %s"%(self.__groupID, self.__orderID,self.__countID, self.__name, self.__notional_value, self.__measured_value, self.__offset, self.__tolerance, self.__file_name))
-        #print("%s"%(self.__countID))
+logger = logging.getLogger('CsvUtil')
 
 '''
 ##h
@@ -123,7 +42,7 @@ def readCSV4Full(fileFullName):
                         rowNum = rowNum + 1
                         flag=notContainsEmptyCol(line)
                         if flag:  # exclude bad data
-                            precisionData_List.append(PrecisionData(identifier.replace('##',''),str(i),line,'full',fileFullName))
+                            precisionData_List.append(DataSet.PrecisionData(identifier.replace('##',''),str(i),line,'full',fileFullName))
                             #print(next(reader))
                         else:
                             logger.error("bad data in row[%s], file[%s]" % (rowNum, fileFullName))
@@ -144,7 +63,7 @@ h6,结果数据 - 1,±0.05,0.0088,6,6.0088
 ##l
 名称,结果名称,公差,偏差,名义值,实测值
 '''
-def readCSV4OneGroup(fileFullName, fileOrder,precisionData_List):
+def readCSV4OneGroup(fileFullName, fileOrder,precisionData_List,precisionErrData_list):
     #identifierList = ['##h', '##d', '##l']
     tempList=[]
     flag_result=True
@@ -158,9 +77,10 @@ def readCSV4OneGroup(fileFullName, fileOrder,precisionData_List):
             else:
                 flag=notContainsEmptyCol(row)
                 if flag:#exclude bad data
-                    tempList.append(PrecisionData(row[0],str(fileOrder),row,'1Group',fileFullName))
+                    tempList.append(DataSet.PrecisionData(row[0],str(fileOrder),row,'1Group',fileFullName))
                 else:
                     logger.error("bad data in row[%s], file[%s]"%(rowNum, fileFullName))
+                    precisionErrData_list.append("bad data in row[%s], file[%s],row details: %s"%(rowNum, fileFullName,row))
                     flag_result=False
     f.close()
     if flag_result:
