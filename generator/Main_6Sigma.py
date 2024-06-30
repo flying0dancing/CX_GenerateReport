@@ -43,11 +43,11 @@ def main_inner(monitorFolder,cxprojectname, preplanFile, reporterTemplate,files_
         result_code=ProcessUtil.execAndWaitFinish(cmdlineStr)
         if result_code==0:
             keyword=FileUtil.getFileName(filename)[0]
-            FileUtil.revFiles(exportFolder,[keyword],['.csv'],exportedReports)
+            FileUtil.revFiles_by_keywords(exportFolder,[keyword],['.csv'],exportedReports)
         fileOrder = fileOrder + 1
 
     if exportedReports==[]:
-        FileUtil.revFiles(monitorFolder, None, ['.csv'], exportedReports)
+        FileUtil.revFiles_by_keywords(monitorFolder, None, ['.csv'], exportedReports)
     PrecisionGroupList,precisionErrData_list=DataSet.get_PrecisionGroupList(exportedReports,files_pattern)
 
     #logger.info("====================================================")

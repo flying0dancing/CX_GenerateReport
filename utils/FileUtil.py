@@ -186,9 +186,15 @@ def getParentFolder(filePath):
 
 
 def deleteFiles(files):
-    for srcfile in files:
-        logger.debug("delete file %s" % (srcfile))
-        os.remove(srcfile)
+    flag = False
+    try:
+        for srcfile in files:
+            logger.debug("delete file %s" % (srcfile))
+            os.remove(srcfile)
+        flag = True
+    except Exception as e:
+        print(e)
+    return flag
 
 
 
@@ -223,7 +229,7 @@ def revFolders(path,within1DayFlag, overWriteCSVFlag, fileTypes=['.stl','.ply'],
                     if fileMatches(r'^' + cleanedSearchStr + '.*\.csv$', filenames) == False:
                         archiveFiles.append(os.path.join(folderName, filename))
 
-def revFiles(path, keywordsList, fileTypes=['.stl', '.ply'], archiveFiles=[]):
+def revFiles_by_keywords(path, keywordsList, fileTypes=['.stl', '.ply'], archiveFiles=[]):
     for folderName, subfolders, filenames in os.walk(path):
         for filename in filenames:
             flag=True
@@ -239,6 +245,67 @@ def revFiles(path, keywordsList, fileTypes=['.stl', '.ply'], archiveFiles=[]):
                 if suffix in fileTypes:
                     archiveFiles.append(os.path.join(folderName,filename)) 
 
+'''
+retrieve folders for keywords and file types,
+if not set keywords and file types, retrieve all files in folder and subfolders.
+'''
+def revFiles1(path, keywordList, fileTypes, archiveFiles):
+    for folderName, subfolders, filenames in os.walk(path):
+        for filename in filenames:
+            full_filename = os.path.join(folderName, filename)
+            suffix = os.path.splitext(filename)[1]
+            suffix_lower =suffix.lower()
+            if isEmptyList(fileTypes):
+                if isEmptyList(keywordList):
+                    archiveFiles.append(full_filename)
+                    #print(full_filename)
+                else:
+                    for keyword in keywordList:
+                        if keyword in full_filename and full_filename not in archiveFiles:
+                            archiveFiles.append(full_filename)
+                            #print(full_filename)
+            else:
+                if suffix_lower in fileTypes:
+                    if isEmptyList(keywordList):
+                        archiveFiles.append(full_filename)
+                        #print(full_filename)
+                    else:
+                        for keyword in keywordList:
+                            if keyword in full_filename and full_filename not in archiveFiles:
+                                archiveFiles.append(full_filename)
+                                #print(full_filename)
+
+
+
+def revFiles_old(path, archivedWhichSubfolderHasKeywords, ignoreFolderWhichContainsFiles, fileTypes=['.stl', '.ply'], archiveFiles=[]):
+
+    for folderName, subfolders, filenames in os.walk(path):
+        flag = True
+        if isEmptyList(ignoreFolderWhichContainsFiles):
+            pass
+        else:
+            for ignoredFile in ignoreFolderWhichContainsFiles:
+                if ignoredFile in filenames:
+                    flag=False
+                    break
+        if flag==True:
+            flag_keyword=False
+            if isEmptyList(archivedWhichSubfolderHasKeywords):
+                flag_keyword = True
+            else:
+                for keyword in archivedWhichSubfolderHasKeywords:
+                    if keyword in folderName:
+                        flag_keyword = True
+                        break
+            if flag_keyword==True:
+                for filename in filenames:
+                    appendFileInList(folderName,filename,fileTypes,archiveFiles)
+
+def appendFileInList(folderName,filename,fileTypes,archiveFiles):
+    suffix = os.path.splitext(filename)[1]
+    suffix=suffix.lower()
+    if suffix in fileTypes:
+        archiveFiles.append(os.path.join(folderName, filename))
 def fileMatches(regStr,filenames):
     flag=False
     for filename in filenames:
@@ -248,6 +315,14 @@ def fileMatches(regStr,filenames):
             break
     return flag
 
+def get_threshold(regStr, searchedStr):
+    str='-1'
+    patternX = re.compile(regStr,re.IGNORECASE|re.UNICODE)
+    matchX = patternX.match(searchedStr)
+    if matchX:
+        str=matchX.group(1)
+        #print(matchX.group(1))
+    return str
 
 def copyAndRenameFile(src,dst):
     if fileExist(src):
@@ -309,14 +384,15 @@ def getFileContent(filepath):
                 cached.append(line)
     return cached
 
-def get_threshold(regStr, searchedStr):
-    str='-1'
-    patternX = re.compile(regStr,re.IGNORECASE|re.UNICODE)
-    matchX = patternX.match(searchedStr)
-    if matchX:
-        str=matchX.group(1)
-        #print(matchX.group(1))
-    return str
+def isEmptyList(li):
+    flag = False
+    if li == None or li == []:
+        logger.debug("String is empty.")
+        flag = True
+    return flag
+
+def is_tuple(obj):
+    return isinstance(obj, tuple)
 
 def appendValueToDict(dict, key,value):
     v=dict.get(key)

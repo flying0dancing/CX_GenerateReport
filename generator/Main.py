@@ -43,11 +43,11 @@ def main_inner(monitorFolder,cxprojectname, preplanFile, reporterTemplate,within
         result_code=ProcessUtil.execAndWaitFinish(cmdlineStr)
         if result_code==0:
             keyword=FileUtil.getFileName(filename)[0]
-            FileUtil.revFiles(exportFolder,[keyword],['.csv'],exportedReports)
+            FileUtil.revFiles_by_keywords(exportFolder,[keyword],['.csv'],exportedReports)
         fileOrder = fileOrder + 1
     fileOrder = 1
     if exportedReports==[]:
-        FileUtil.revFiles(monitorFolder, None, ['.csv'], exportedReports)
+        FileUtil.revFiles_by_keywords(monitorFolder, None, ['.csv'], exportedReports)
     for csvname in exportedReports:
         if csvname.lower().endswith('.csv'):
             CsvUtil.readCSV4OneGroup(csvname, fileOrder, precisionData_List, precisionErrData_list)
