@@ -1,9 +1,9 @@
 {
     "YYT1818_SingleRun": {
-        "export_excel_template" : "D:\\Kun\\git_projects\\CX_GenerateReport\\templates\\YYT1818-2022_report_yyyymmdd.xlsx",
-        "monitor_folder" : "\\\\10.196.98.73\\test\\Quality\\CX_projects\\YYT1818\\result\\800",
-        "pre_plan_ini_template" : "D:\\Kun\\git_projects\\CX_GenerateReport\\templates\\YYT1818-2022_preplan_sample.ini",
-        "cx_project" : "D:\\Kun\\git_projects\\CX_GenerateReport\\templates\\111_0703.CXProj",
+        "export_excel_template" : "D:\\Kun\\wk_auto_test\\CX_GenerateReport\\templates\\YYT1818-2022_report_yyyymmdd.xlsx",
+        "monitor_folder" : "D:\\Kun\\scanflowuiauto_pool\\logs\\20240701\\tst_07_scan_export_13\\tip1-20",
+        "pre_plan_ini_template" : "D:\\Kun\\wk_auto_test\\CX_GenerateReport\\templates\\YYT1818-2022_preplan_sample.ini",
+        "cx_project" : "D:\\Kun\\wk_auto_test\\CX_GenerateReport\\templates\\YYT18180_kun_beforeCut.CXProj",
         "within1DayFlag" : false,
         "overWriteCSVFlag" : false,
         "id" : 1,
@@ -22,9 +22,9 @@
     },
     "YYT1818_6Sigma": {
         "export_excel_template" : "YYT1818-2022_report(6Sigma)_yyyymmdd.xlsx",
-        "monitor_folder" : "C:\\D\\0629\\802",
-        "pre_plan_ini_template" : "D:\\Kun\\git_projects\\CX_GenerateReport\\templates\\YYT1818-2022_preplan_sample.ini",
-        "cx_project" : "D:\\Kun\\git_projects\\CX_GenerateReport\\templates\\111_0703.CXProj",
+        "monitor_folder" : "D:\\Kun\\scanflowuiauto_pool\\logs\\20240701\\tst_07_scan_export_17\\tip1-20",
+        "pre_plan_ini_template" : "D:\\Kun\\wk_auto_test\\CX_GenerateReport\\templates\\YYT1818-2022_preplan_sample.ini",
+        "cx_project" : "D:\\Kun\\wk_auto_test\\CX_GenerateReport\\templates\\YYT18180_kun_beforeCut.CXProj",
         "within1DayFlag" : false,
         "overWriteCSVFlag" : false,
         "id" : 1,
