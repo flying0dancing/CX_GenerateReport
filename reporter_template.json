@@ -22,7 +22,7 @@
     },
     "YYT1818_6Sigma": {
         "export_excel_template" : "YYT1818-2022_report(6Sigma)_yyyymmdd.xlsx",
-        "monitor_folder" : "D:\\Kun\\scanflowuiauto_pool\\logs\\20240701\\tst_07_scan_export_17\\tip1-20",
+        "monitor_folder" : "D:\\Kun\\scanflowuiauto_pool\\logs\\20240702\\tst_07_scan_export_5\\export_default\\tip1-20",
         "pre_plan_ini_template" : "D:\\Kun\\wk_auto_test\\CX_GenerateReport\\templates\\YYT1818-2022_preplan_sample.ini",
         "cx_project" : "D:\\Kun\\wk_auto_test\\CX_GenerateReport\\templates\\YYT18180_kun_beforeCut.CXProj",
         "within1DayFlag" : false,

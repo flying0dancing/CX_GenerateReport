@@ -18,7 +18,7 @@ def execAndWaitFinish(cmdline_str):
             # if psutil.pid_exists(process.pid) and psutil.pid_exists(process.pid) in psutil.pids():
             # print('running')
             # time.sleep(5)
-            count =count +git 1
+            count =count + 1
 
             if isRunning('RFXOVMain.exe'):
                 if count==1:

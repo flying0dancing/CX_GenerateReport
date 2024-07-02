@@ -9,9 +9,9 @@ from generator import Main,Main_6Sigma
 config_json = sys.argv[1]
 selected_template = sys.argv[2]
 if os.path.isfile(config_json):
-    if 'YYT1818_SingleRun' in selected_template:
+    if 'YYT1818_SingleRun'.lower()==selected_template.lower():
         Main.main(config_json, selected_template)
-    elif 'YYT1818_6Sigma' in selected_template:
+    elif 'YYT1818_6Sigma'.lower()==selected_template.lower():
         if __name__ == '__main__':
             Main_6Sigma.main(config_json, selected_template)
     '''
